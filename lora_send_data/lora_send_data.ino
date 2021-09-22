@@ -86,7 +86,8 @@ void lora_init()
 		while (1);
 	}
 } 
-//for now just transmitting the string literal "test"
+
+// for now just transmitting the global variables for temp and time stamp when read of the temp
 void lora_transmit()
 {
 	LoRa.begin(CENTER_FREQ);
@@ -96,6 +97,12 @@ void lora_transmit()
 	LoRa.setTxPower(TX_POWER);
 	Serial.print("Sending packet: ");
 	LoRa.beginPacket();
-	LoRa.print("test");
+	LoRa.print(time_temp);
+	uint8_t i;
+	for (i=0; i<COUPLE_COUNT; i++)
+	{
+		LoRa.print(",");
+		LoRa.print(temp_data[i]);
+	}
 	LoRa.endPacket();
 }
