@@ -12,26 +12,30 @@
 #define TX_POWER 4
 
 //MAX31855 config vars
-#define COUPLE_COUNT 2
+#define COUPLE_COUNT 5
 #define SS_1 12
 #define SS_2 11
+#define SS_3 10
+#define SS_4 9
+#define SS_5 5
 
 uint32_t time_temp =0;
-uint16_t temp_data[COUPLE_COUNT];
+float temp_data[COUPLE_COUNT];
 
 Adafruit_MAX31855 couple_1(SS_1);
 Adafruit_MAX31855 couple_2(SS_2);
+Adafruit_MAX31855 couple_3(SS_3);
+Adafruit_MAX31855 couple_4(SS_4);
+Adafruit_MAX31855 couple_5(SS_5);
 
 //function predefinitions
 void lora_init();
 void lora_transmit();
-
 void init_couples();
-void read_couples(uint32_t ms, int16_t * temps);
+void read_couples(uint32_t ms, float * temps);
 
 void setup() {
 	Serial.begin(9600);
-	//while (!Serial);
 
 	Serial.println("t-vac lora logger");
 	lora_init();
@@ -57,15 +61,35 @@ void init_couples()
 
 	if (!couple_2.begin())
 	{
-		Serial.println("error initing couple_1");
+		Serial.println("error initing couple_2");
+		while (1) delay(10);
+	}
+
+	if (!couple_3.begin())
+	{
+		Serial.println("error initing couple_3");
+		while (1) delay(10);
+	}
+	if (!couple_4.begin())
+	{
+		Serial.println("error initing couple_4");
+		while (1) delay(10);
+	}
+	if (!couple_5.begin())
+	{
+		Serial.println("error initing couple_5");
 		while (1) delay(10);
 	}
 }
 
-void read_couples(uint32_t *ms, int16_t * temps)
+void read_couples(uint32_t *ms, float * temps)
 {
 	temps[0] = couple_1.readCelsius();
 	temps[1] = couple_2.readCelsius();
+	temps[2] = couple_3.readCelsius();
+	temps[3] = couple_4.readCelsius();
+	temps[4] = couple_5.readCelsius();
+
 	*ms = millis();
 	uint8_t i;
 	Serial.print(*ms);
