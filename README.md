@@ -3,3 +3,4 @@
 
 # Dependencies
  - Requires Arduino LORA library and the Adafruit MAX31855 Library
+ - Uses Feather32u4 lora boards - [LoRa featherboard](https://learn.adafruit.com/adafruit-feather-m0-radio-with-lora-radio-module/setup)
