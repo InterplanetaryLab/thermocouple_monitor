@@ -15,7 +15,7 @@ Make sure to set the right frequency
 int counter = 0;
 int txPower = 2; //sets the transmittion power of LoRa modem 2-20 default is 17
 
-int center_freq = 905.5; // Mhz
+int center_freq = 906.5; // Mhz
 
 void setup() {
   Serial.begin(9600);

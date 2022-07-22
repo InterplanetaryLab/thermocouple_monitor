@@ -7,7 +7,7 @@
 #define RST 4
 #define DIO0 7
 #define SPREAD_FACTOR 10
-#define CENTER_FREQ 905.5E6
+#define CENTER_FREQ 906.5E6
 #define BANDWIDTH 62.5E3
 #define TX_POWER 4
 
