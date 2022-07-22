@@ -7,24 +7,26 @@
 #define RST 4
 #define DIO0 7
 #define SPREAD_FACTOR 10
-#define CENTER_FREQ 903.5E6
+#define CENTER_FREQ 905.5E6
 #define BANDWIDTH 62.5E3
 #define TX_POWER 4
 
 //MAX31855 config vars
 #define COUPLE_COUNT 8
 
-#define SS_1 19
-#define SS_2 20
-#define SS_3 22
-#define SS_4 23
-#define SS_5 24
-#define SS_6 24
-#define SS_7 24
-#define SS_8 24
+#define SS_1 5
+#define SS_2 6
+#define SS_3 9
+#define SS_4 10
+#define SS_5 11
+#define SS_6 12
+#define SS_7 13
+#define SS_8 A1
 
 uint32_t time_temp =0;
 float temp_data[COUPLE_COUNT];
+
+#define COLLECT_PERIOD_MS 3000
 
 Adafruit_MAX31855 couple_1(SS_1);
 Adafruit_MAX31855 couple_2(SS_2);
@@ -54,7 +56,7 @@ void setup() {
 void loop() {
 	read_couples(&time_temp, temp_data);	
 	lora_transmit(); 
-	delay(500);
+	delay(COLLECT_PERIOD_MS);
 }
 
 // thermocouple section
