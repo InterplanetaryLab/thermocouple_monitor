@@ -1,3 +1,10 @@
+/* Thermocouple Receiver Script. Outputs thermocouple data in the format;
+
+timestamp(ms since startup),S1,S2,S...
+
+Make sure to set the right frequency
+*/
+
 #include <SPI.h>
 #include <LoRa.h>
 
@@ -5,9 +12,10 @@
 #define RST 4
 #define DIO0 7
 
-
 int counter = 0;
 int txPower = 2; //sets the transmittion power of LoRa modem 2-20 default is 17
+
+int center_freq = 903.5; // Mhz
 
 void setup() {
   Serial.begin(9600);
@@ -17,7 +25,7 @@ void setup() {
 
   LoRa.setPins(SS, RST, DIO0);
 
-  if (!LoRa.begin(437.5E6)) { //436957031
+  if (!LoRa.begin(center_freq)) { 
     Serial.println("Starting LoRa failed!");
     while (1);
   }
@@ -31,22 +39,10 @@ void loop() {
   // try to parse packet
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
-    // received a packet
-  //  Serial.print("Received packet '");
-
     // read packet
     while (LoRa.available()) {
       Serial.print((char)LoRa.read());
     }
     Serial.println("");
-    /*
-    // RSSI and SNR of packet
-    Serial.print("' SNR: ");
-    Serial.print(LoRa.packetSnr());
-    Serial.print("' RSSI: ");
-    Serial.print(LoRa.packetRssi());
-    Serial.print("' Frequency Error: ");
-    Serial.println((long) LoRa.packetFrequencyError());
-    */
   }
 }

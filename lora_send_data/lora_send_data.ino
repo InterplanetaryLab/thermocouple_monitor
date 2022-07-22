@@ -7,17 +7,21 @@
 #define RST 4
 #define DIO0 7
 #define SPREAD_FACTOR 10
-#define CENTER_FREQ 437.5E6
+#define CENTER_FREQ 903.5E6
 #define BANDWIDTH 62.5E3
 #define TX_POWER 4
 
 //MAX31855 config vars
-#define COUPLE_COUNT 5
-#define SS_1 12
-#define SS_2 11
-#define SS_3 10
-#define SS_4 9
-#define SS_5 5
+#define COUPLE_COUNT 8
+
+#define SS_1 19
+#define SS_2 20
+#define SS_3 22
+#define SS_4 23
+#define SS_5 24
+#define SS_6 24
+#define SS_7 24
+#define SS_8 24
 
 uint32_t time_temp =0;
 float temp_data[COUPLE_COUNT];
@@ -27,6 +31,9 @@ Adafruit_MAX31855 couple_2(SS_2);
 Adafruit_MAX31855 couple_3(SS_3);
 Adafruit_MAX31855 couple_4(SS_4);
 Adafruit_MAX31855 couple_5(SS_5);
+Adafruit_MAX31855 couple_6(SS_6);
+Adafruit_MAX31855 couple_7(SS_7);
+Adafruit_MAX31855 couple_8(SS_8);
 
 //function predefinitions
 void lora_init();
@@ -80,6 +87,21 @@ void init_couples()
 		Serial.println("error initing couple_5");
 		while (1) delay(10);
 	}
+	if (!couple_6.begin())
+	{
+		Serial.println("error initing couple_5");
+		while (1) delay(10);
+	}
+	if (!couple_7.begin())
+	{
+		Serial.println("error initing couple_5");
+		while (1) delay(10);
+	}
+	if (!couple_8.begin())
+	{
+		Serial.println("error initing couple_5");
+		while (1) delay(10);
+	}
 }
 
 void read_couples(uint32_t *ms, float * temps)
@@ -89,6 +111,9 @@ void read_couples(uint32_t *ms, float * temps)
 	temps[2] = couple_3.readCelsius();
 	temps[3] = couple_4.readCelsius();
 	temps[4] = couple_5.readCelsius();
+	temps[5] = couple_6.readCelsius();
+	temps[6] = couple_7.readCelsius();
+	temps[7] = couple_8.readCelsius();
 
 	*ms = millis();
 	uint8_t i;
